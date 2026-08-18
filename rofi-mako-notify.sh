@@ -17,7 +17,8 @@ if [[ -z "$selected_input" ]]; then
 fi
 
 if [[ "$selected_input" -eq 0 ]]; then
-    makoctl dismiss -a 2>/dev/null
+    rm -f ~/.local/share/mako/history 2>/dev/null
+    systemctl --user reload mako 2>/dev/null || pkill -HUP mako
     exec "$0"
 fi
 
