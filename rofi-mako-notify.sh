@@ -3,14 +3,14 @@
 raw_json=$(makoctl history -j)
 
 if [[ -z "$raw_json" ]] || [[ $(echo "$raw_json" | jq '. | length') -eq 0 ]]; then
-    echo "🔔 Notification history is empty!" | rofi -dmenu -i -p " History" -l 3 -markup-rows
+    echo " Notification history is empty!" | rofi -dmenu -i -p " History" -l 3 -markup-rows
     exit 0
 fi
 
-selected_input=$( (echo "<span foreground='#f38ba8'><b>🧹 [Clear All History]</b></span>"; echo "$raw_json" | jq -r '
+selected_input=$( (echo "<span foreground='#c90000' weight='black'> 󰃢  [ Clear All History ] 󰃢 </span>"; echo "$raw_json" | jq -r '
 .[] |
 "\(.summary // ""): \(.body // "" | gsub("\n"; " "))"
-') | rofi -dmenu -i -p "🔔 History" -l 10 -format i -markup-rows)
+') | rofi -dmenu -i -p " History" -l 10 -format i -markup-rows)
 
 if [[ -z "$selected_input" ]]; then
     exit 0
@@ -32,25 +32,25 @@ notification_data=$(echo "$raw_json" | jq -r --argjson idx "$index" '
 
 IFS=$'\x01' read -r id app urgency summary body <<< "$notification_data"
 
-detail_text="📱 <span foreground='#89b4fa'><b>App:</b></span> <span foreground='#ffffff'><b>$app</b></span> | 📌 <span foreground='#f9e2af'><b>Urgency:</b></span> <span foreground='#ffffff'><b>$urgency</b></span>
+detail_text=" <span foreground='#89b4fa'><b>App:</b></span> <span foreground='#ffffff'><b>$app</b></span> |  <span foreground='#f9e2af'><b>Urgency:</b></span> <span foreground='#ffffff'><b>$urgency</b></span>
 ----------------------------------------
  <span foreground='#a6e3a1'><b>Summary:</b></span>
 <span foreground='#ffffff'>$summary</span>
-💬 <span foreground='#89dceb'><b>Body:</b></span>
+󰚢 <span foreground='#89dceb'><b>Body:</b></span>
 <span foreground='#cdd6f4'>$body</span>"
 
 rofi -e "$detail_text" -markup
 
-action=$(echo -e "⚡ Invoke\n🗑️ Remove\n↩️ Back" | rofi -dmenu -i -p "Action" -l 3)
+action=$(echo -e "󱐋   Invoke\n   Remove\n   Back" | rofi -dmenu -i -p "Action" -l 3)
 
 case "$action" in
-    "⚡ Invoke")
+    "󱐋   Invoke")
         makoctl invoke -n "$id" 2>/dev/null || makoctl restore -n "$id"
         ;;
-    "🗑️ Remove")
+    "   Remove")
         makoctl dismiss -n "$id" 2>/dev/null
         ;;
-    "↩️ Back")
+    "    Back")
         ;;
 esac
 
