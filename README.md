@@ -13,7 +13,7 @@ A lightweight notification history viewer and manager for [Mako](https://github.
 Clone the repository and make the script executable:
 
 ```bash
-git clone [https://github.com/FrostShelter/rofi-mako-notify.git](https://github.com/FrostShelter/rofi-mako-notify.git)
+git clone https://github.com/FrostShelter/rofi-mako-notify.git
 cd rofi-mako-notify
 sudo install -Dm755 rofi-mako-notify.sh /usr/local/bin/rofi-notify
 ```
@@ -22,4 +22,10 @@ In any terminal type:
 
 ```bash
 rofi-notify
+```
+## Uninstall
+To remove the binary from your system:
+
+```bash
+sudo rm /usr/local/bin/rofi-notify
 ```
