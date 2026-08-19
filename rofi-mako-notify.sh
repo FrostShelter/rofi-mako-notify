@@ -13,7 +13,7 @@ touch "$IGNORED_FILE"
 raw_json=$(makoctl history -j 2>/dev/null)
 
 if [[ -z "$raw_json" ]] || [[ $(echo "$raw_json" | jq '. | length') -eq 0 ]]; then
-    echo "   Notification history is empty!" |
+    echo "     Notification history is empty!" |
         rofi -dmenu -i -p " History" -l 3 -markup-rows
     exit 0
 fi
@@ -43,7 +43,7 @@ filtered_json=$(echo "$raw_json" |
 # ============================================================
 
 if [[ $(echo "$filtered_json" | jq 'length') -eq 0 ]]; then
-    echo " Notification history is empty!" |
+    echo "     Notification history is empty!" |
         rofi -dmenu \
             -i \
             -p " History" \
